@@ -1,0 +1,47 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <div class="login-container">
+            <div class="form-content">
+                <h1 id="title">Register</h1>
+
+                <form action="/register" method="post">
+                    <div class="input-group">
+                        <div class="input-field" id="nameInput">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" placeholder="Username" name="username" id="username" required>
+                        </div>
+                        <div class="input-field">
+                            <i class="fa-solid fa-envelope"></i>
+                            <input type="text" placeholder="e-mail" name="email" id="email" required>
+                        </div>
+                        <div class="input-field">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" placeholder="Password" name="password" id="password" required>
+                        </div>
+                        <div class="input-field">
+                            <i class="fa-solid fa-user-tag"></i>
+                            <select name="userType" id="userType" required>
+                                    <option value="Admin">Admin</option>
+                                    <option value="User" selected>User</option>
+                                </select>
+                        </div>
+                        <p>Forgot password? <a href="#">click here!</a></p>
+                    </div>
+                    <div class="btn-field">
+                        <button type="submit">Sign Up</button>
+                        <!-- <button id="signIn" type="button" class="disable">Login</button> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    <%- include('../includes/end.ejs') %>

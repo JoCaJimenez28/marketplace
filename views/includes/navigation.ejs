@@ -1,0 +1,135 @@
+<div class="backdrop"></div>
+<header class="main-header">
+    <button id="side-menu-toggle">MENU</button>
+    <div class="">
+        <img src="https://scontent.flmm1-1.fna.fbcdn.net/v/t39.30808-6/347808716_916695546077593_6610587346100951465_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=0debeb&_nc_eui2=AeF_RANcwtVHb1Od1y-PJTaLGlaMzjuE0q4aVozOO4TSrh7XrcSLvfJgPwa-UtIcjydkUyawxkZ4ktpyfmsbirOT&_nc_ohc=-aOGm3a7I5kAX-w2Bp1&_nc_ht=scontent.flmm1-1.fna&oh=00_AfB93ORlK9yOA_Mi2WLGydslSGSyqM1AbcJuYqYK_TlaXA&oe=646BDBDF" alt="Cube´s Crafters Logo">
+    </div>
+    <nav class="main-header__nav">        
+        <ul class="main-header__item-list">
+            <li class="main-header__item">
+                <a class="<%= path === '/' ? 'active' : '' %>" href="/">Shop</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Products</a>
+            </li>
+            <% if (isAuthenticated) { %>
+            <li class="main-header__item">
+                <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
+            </li>
+            
+            <li class="main-header__item">
+                <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add Product</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products">Admin Products</a>
+            </li>
+            <% } %>
+        </ul>
+        <ul class="main-header__item-list">
+            <% if (!isAuthenticated) { %>
+            <li class="main-header__item">
+                <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/register' ? 'active' : '' %>" href="/register">Register</a>
+            </li>
+            <% } else { %>
+            <li class="main-header__item">
+                <form action="/logout" method="post">
+                    <button type="submit">Logout</button>
+                </form>
+            </li>
+            <% } %>
+        </ul>
+    </nav>
+</header>
+
+<nav class="mobile-nav">
+    <ul class="mobile-nav__item-list">
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/' ? 'active' : '' %>" href="/">Shop</a>
+        </li>
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Products</a>
+        </li>
+        <% if (isAuthenticated) { %>
+            <li class="mobile-nav__item">
+             <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
+        </li>
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
+        </li>
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add Product</a>
+        </li>
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products">Admin Products</a>
+        </li>
+        <% } %>
+    </ul>
+    <ul class="mobile-nav__item-list">
+        <% if (!isAuthenticated) { %>
+            <li class="main-header__item">
+                <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/register' ? 'active' : '' %>" href="/register">Register</a>
+            </li>
+            <% } else { %>
+            <li class="main-header__item">
+                <form action="/logout" method="post">
+                    <button type="submit">Logout</button>
+                </form>
+            </li>
+            <% } %>
+    </ul>
+</nav>
+
+<!-- <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="#!">Start Bootstrap</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    
+                    <li class="nav-item">
+                        <a class="<%= path === '/products' ? 'nav-link active' : 'nav-link' %>" href="/products">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="<%= path === '/cart' ? 'nav-link active' : 'nav-link' %>" href="/cart">Cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="<%= path === '/orders' ? 'nav-link active' : 'nav-link' %>" href="/orders">Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="<%= path === '/admin/add-product' ? 'nav-link active' : 'nav-link' %>" href="/admin/add-product">Add Product
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="<%= path === '/admin/products' ? 'nav-link active' : 'nav-link' %>" href="/admin/products">Admin Products
+                        </a>
+                    </li>
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#!">All Products</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" href="#!">Popular Items</a></li>
+                            <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <button class="btn btn-outline-dark" type="submit">
+                        <i class="bi-cart-fill me-1"></i>
+                        Cart
+                        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+</header> -->

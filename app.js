@@ -4,7 +4,9 @@ const http = require('http');
 
 const express = require('express');
 
-const bodyParser = require('body-parser'); 
+const bodyParser = require('body-parser');
+
+// const recaptcha = require('express-recaptcha');
 
 const errorController = require('./controllers/error');
 const sequelize= require('./util/database');
@@ -52,12 +54,21 @@ app.use((req, res, next) => {
       return next();
     }
     User.findByPk(req.session.user.id)
-      .then(user => {
+        .then(user => {
         req.user = user;
         next();
-      })
-      .catch(err => console.log(err));
-  });
+        })
+        .catch(err => console.log(err));
+});
+
+// recaptcha.init('6LdOSj8mAAAAAG7VB3FjFvPY9h1Bgj70UX-3980a', '6LdOSj8mAAAAAO0a4g-Rz_FY_U5hj8jE-Zn3m1ks', {
+//     hl: 'es', // Opcional: establece el idioma
+// });
+
+// app.use((req, res, next) => {
+//     res.locals.recaptcha = recaptcha.render();
+//     next();
+// });
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);

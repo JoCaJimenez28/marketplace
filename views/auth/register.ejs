@@ -3,6 +3,8 @@
     <link rel="stylesheet" href="/css/auth.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
@@ -10,11 +12,11 @@
 
     <main>
         <div class="login-container">
-            <div class="form-content">
+            <div class="form-content-register">
                 <h1 id="title">Register</h1>
 
                 <form action="/register" method="post">
-                    <div class="input-group">
+                    <div class="input-group-register">
                         <div class="input-field" id="nameInput">
                             <i class="fa-solid fa-user"></i>
                             <input type="text" placeholder="Username" name="username" id="username" required>
@@ -35,6 +37,10 @@
                                 </select>
                         </div>
                         <p>Forgot password? <a href="#">click here!</a></p>
+
+                        <br>
+                        <div class="g-recaptcha" data-sitekey="6LdOSj8mAAAAAG7VB3FjFvPY9h1Bgj70UX-3980a"></div>
+                        <br/>
                     </div>
                     <div class="btn-field">
                         <button type="submit">Sign Up</button>

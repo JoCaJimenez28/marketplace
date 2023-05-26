@@ -23,6 +23,15 @@
     border-radius: 25px;
 }
 
+.form-content-register{
+    width: 100%;
+    max-width: 450px;
+    background-color: #2c2f35;
+    padding: 50px 70px 70px;
+    text-align: center;
+    border-radius: 25px;
+}
+
 .form-content h1{
     font-size: 30px;
     margin-bottom: 60px;
@@ -30,7 +39,26 @@
     position: relative;
 }
 
+.form-content-register h1{
+    font-size: 30px;
+    margin-bottom: 60px;
+    color: #FFFFFF;
+    position: relative;
+}
+
 .form-content h1::after{
+    content: '';
+    width: 30px;
+    height: 4px;
+    border-radius: 3px;
+    background: #ffc107;
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.form-content-register h1::after{
     content: '';
     width: 30px;
     height: 4px;
@@ -111,7 +139,11 @@ form p a{
 }
 
 .input-group{
-    height: 350px;
+    height: 200px;
+}
+
+.input-group-register{
+    height: 450px;
 }
 
 .btn-field button.disable{

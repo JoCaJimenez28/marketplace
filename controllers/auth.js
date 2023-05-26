@@ -7,10 +7,17 @@ const recaptcha = new RecaptchaV3('6LdOSj8mAAAAAG7VB3FjFvPY9h1Bgj70UX-3980a', '6
 
 
 exports.getLogin = (req, res, next) => {
+    let message = req.flash('error');
+    if(message.length > 0){
+      message = message[0];
+    } else{
+      message= null;
+    }
     res.render('auth/login', {
         path: '/login',
         pageTitle: 'Login',
-        isAuthenticated: false
+        isAuthenticated: false,
+        errorMessage: message
       });
 }
 
@@ -22,6 +29,7 @@ exports.postLogin = (req, res, next) =>{
     .then(user => {
         console.log(user)
         if(!user){
+          req.flash('error', 'Invalid credentials.');
           return res.redirect('login');
         }
         bcrypt.compare(password, user.password)
@@ -34,6 +42,7 @@ exports.postLogin = (req, res, next) =>{
                 res.redirect('/');
             });
           }
+          req.flash('error', 'Invalid credentials.');
           res.redirect('login');
         })
         .catch(err => {
@@ -45,11 +54,17 @@ exports.postLogin = (req, res, next) =>{
 }
 
 exports.getRegister = (req, res, next) => {
-
+  let message = req.flash('error');
+  if(message.length > 0){
+    message = message[0];
+  } else{
+    message= null;
+  }
     res.render('auth/register', {
         path: '/register',
         pageTitle: 'Register',
-        isAuthenticated: false
+        isAuthenticated: false,
+        errorMessage: message
     });
 }
 
@@ -65,6 +80,7 @@ exports.postRegister = (req, res, next) => {
       .then(user => {
         console.log(user);
         if (user) {
+          req.flash('error', 'E-mail address already exist, please choose a different');
           return res.redirect('/register');
         }
         return bcrypt.hash(password, 12)

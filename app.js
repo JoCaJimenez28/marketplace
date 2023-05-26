@@ -6,13 +6,15 @@ const express = require('express');
 
 const bodyParser = require('body-parser');
 
-// const recaptcha = require('express-recaptcha');
+const csrf = require('csurf');
+const flash = require('connect-flash');
 
 const errorController = require('./controllers/error');
 const sequelize= require('./util/database');
 
 const session = require('express-session');
 var SequelizeSession = require('connect-session-sequelize')(session.Store);
+
 
 const Product = require('./models/product');
 const User = require('./models/user');
@@ -33,6 +35,8 @@ const store = new SequelizeSession({
 
 app.use(express.static('public/images'));
 
+const csrfProtection = csrf();
+
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
@@ -49,6 +53,9 @@ app.use(session({
     saveUninitialized: false
 }));
 
+app.use(csrfProtection);
+app.use(flash());
+
 app.use((req, res, next) => {
     if (!req.session.user) {
       return next();
@@ -61,14 +68,11 @@ app.use((req, res, next) => {
         .catch(err => console.log(err));
 });
 
-// recaptcha.init('6LdOSj8mAAAAAG7VB3FjFvPY9h1Bgj70UX-3980a', '6LdOSj8mAAAAAO0a4g-Rz_FY_U5hj8jE-Zn3m1ks', {
-//     hl: 'es', // Opcional: establece el idioma
-// });
-
-// app.use((req, res, next) => {
-//     res.locals.recaptcha = recaptcha.render();
-//     next();
-// });
+app.use((req, res, next) => {
+    res.locals.isAuthenticated = req.session.isAuthenticated;
+    res.locals.csrfToken = req.csrfToken();
+    next();
+});
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
@@ -91,37 +95,10 @@ Order.belongsToMany(Product, { through: OrderItem});
 
 sequelize
     // .sync( { force: true })
-    .sync()
-    // .then(result => {
-    //     return User.findByPk(1);
-    // })
-    // .then(user =>{
-    //     if(!user){
-    //         return User.create({username: 'Jose', email: 'prueba@prueba.com', password: '1234', userType: 'Admin'});
-    //     }
-    //     return user;
-    // })
-    // .then(user =>{
-    //     let result = [user];
-    //     user.getCart()
-    //     .then(cart => {
-    //         result.push(cart);
-    //         return result;       
-    //     })
-    //     .then(result => {
-    //         const user = result[0];
-    //         const cart = result[1];
-    //         if(!cart){
-    //             return user.createCart();
-    //         }
-    
-    //         return result;
-    //     })
-        .then(result =>{
-            server.listen(3000);
-        })
-        // .catch(err => console.log(err));
-    // })
+    .sync()    
+    .then(result =>{
+        server.listen(3000);
+    })
     .catch(err => {
         console.log(err);
     });

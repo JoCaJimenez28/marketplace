@@ -11,6 +11,9 @@
     <%- include('../includes/navigation.ejs') %>
 
     <main>
+        <% if(errorMessage) { %>
+            <div class="user-message user-message--error"><%= errorMessage %></div>
+        <% } %>
         <div class="login-container">
             <div class="form-content-register">
                 <h1 id="title">Register</h1>
@@ -43,6 +46,7 @@
                         <br/>
                     </div>
                     <div class="btn-field">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <button type="submit">Sign Up</button>
                         <!-- <button id="signIn" type="button" class="disable">Login</button> -->
                     </div>

@@ -35,7 +35,8 @@ exports.getLogin = (req, res, next) => {
         pageTitle: 'Login',
         isAuthenticated: false,
         errorMessage: errorMessage,
-        message: message
+        message: message,
+        isADmin: req.session.isAdmin
       });
 }
 
@@ -54,6 +55,7 @@ exports.postLogin = (req, res, next) =>{
         .then(match =>{
           if(match){
             req.session.isLoggedIn = true;
+            req.session.isAdmin = user.userType === 'Admin' ? true : false; 
             req.session.user = user;
             return req.session.save(err =>{
                 console.log(err);
@@ -82,7 +84,8 @@ exports.getRegister = (req, res, next) => {
         path: '/register',
         pageTitle: 'Register',
         isAuthenticated: false,
-        errorMessage: message
+        errorMessage: message,
+        isAdmin: false
     });
 }
 
@@ -152,7 +155,8 @@ exports.getForgotPassword = (req, res, next) =>{
         path: '/forgot-password',
         pageTitle: 'Forgot Password',
         isAuthenticated: false,
-        errorMessage: message
+        errorMessage: message,
+        isAdmin: req.session.isAdmin
       });
 }
 

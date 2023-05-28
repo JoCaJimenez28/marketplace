@@ -4,7 +4,16 @@
     <div class="">
         <img src="https://scontent.flmm1-1.fna.fbcdn.net/v/t39.30808-6/347808716_916695546077593_6610587346100951465_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=0debeb&_nc_eui2=AeF_RANcwtVHb1Od1y-PJTaLGlaMzjuE0q4aVozOO4TSrh7XrcSLvfJgPwa-UtIcjydkUyawxkZ4ktpyfmsbirOT&_nc_ohc=-aOGm3a7I5kAX-w2Bp1&_nc_ht=scontent.flmm1-1.fna&oh=00_AfB93ORlK9yOA_Mi2WLGydslSGSyqM1AbcJuYqYK_TlaXA&oe=646BDBDF" alt="Cube´s Crafters Logo">
     </div>
-    <nav class="main-header__nav">        
+    <div class="input-box">
+        <form action="/search" method="post">
+            <input type="text" placeholder="Search..." name="search" id="search">
+            <span class="icon">
+                <i class="uil uil-search search-icon"></i>
+            </span>
+            <i class="uil uil-times close-icon"></i>
+        </form>        
+    </div>
+    <nav class="main-header__nav">  
         <ul class="main-header__item-list">
             <li class="main-header__item">
                 <a class="<%= path === '/' ? 'active' : '' %>" href="/">Shop</a>
@@ -39,7 +48,7 @@
             <% } else { %>
             <li class="main-header__item">
                 <form action="/logout" method="post">
-                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <!-- <input type="hidden" name="_csrf" value=" "> -->
                     <button type="submit">Logout</button>
                 </form>
             </li>
@@ -82,7 +91,7 @@
             <% } else { %>
             <li class="main-header__item">
                 <form action="/logout" method="post">
-                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <!-- <input type="hidden" name="_csrf" value=""> -->
                     <button type="submit">Logout</button>
                 </form>
             </li>

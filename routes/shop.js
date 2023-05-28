@@ -24,4 +24,6 @@ router.get('/orders', isAuth, shopController.getOrders);
 
 router.post('/create-order', isAuth, shopController.postOrder);
 
+router.post('/search', shopController.postSearch);
+
 module.exports = router;

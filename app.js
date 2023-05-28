@@ -6,7 +6,7 @@ const express = require('express');
 
 const bodyParser = require('body-parser');
 
-const csrf = require('csurf');
+// const csrf = require('csurf');
 const flash = require('connect-flash');
 
 const errorController = require('./controllers/error');
@@ -35,7 +35,7 @@ const store = new SequelizeSession({
 
 app.use(express.static('public/images'));
 
-const csrfProtection = csrf();
+// const csrfProtection = csrf();
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -53,7 +53,7 @@ app.use(session({
     saveUninitialized: false
 }));
 
-app.use(csrfProtection);
+// app.use(csrfProtection);
 app.use(flash());
 
 app.use((req, res, next) => {
@@ -68,11 +68,11 @@ app.use((req, res, next) => {
         .catch(err => console.log(err));
 });
 
-app.use((req, res, next) => {
-    res.locals.isAuthenticated = req.session.isAuthenticated;
-    res.locals.csrfToken = req.csrfToken();
-    next();
-});
+// app.use((req, res, next) => {
+//     res.locals.isAuthenticated = req.session.isAuthenticated;
+//     res.locals.csrfToken = req.csrfToken();
+//     next();
+// });
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);

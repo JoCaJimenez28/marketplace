@@ -1,4 +1,6 @@
 const Product = require('../models/product');
+const Sequelize = require('sequelize');
+const {Op} = require('sequelize');
 
 exports.getProducts = (req, res, next) => {
     console.log(req.session.user);
@@ -159,6 +161,26 @@ exports.getOrders = (req, res, next) =>{
                 path: '/orders',
                 pageTitle: 'Your Orders',
                 orders: orders,
+                isAuthenticated: req.session.isLoggedIn
+              });
+        })
+        .catch(err => console.log(err));
+}
+
+exports.postSearch = (req, res, next) =>{
+    const searchedProduct = req.body.search;
+
+    console.log(searchedProduct);
+
+    Product.findAll({where: {description: {
+        [Op.like]: `%${searchedProduct}%`
+      }}})
+        .then(products => {
+            console.log(products);
+            res.render('shop/index', {
+                path: '/',
+                pageTitle: 'Shop',
+                prods: products,
                 isAuthenticated: req.session.isLoggedIn
               });
         })

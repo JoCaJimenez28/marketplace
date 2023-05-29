@@ -117,18 +117,31 @@ exports.getProducts = (req, res, next) => {
         .catch(err => {
             console.log(err);
         });
-    // req.user
-    //     .getProducts() 
-    //     .then(products => {
-    //         res.render('admin/products', { 
-    //             prods: products, 
-    //             pageTitle: 'Admin Products', 
-    //             path: '/admin/products',
-    //             isAuthenticated: req.session.isLoggedIn
-    //             }
-    //         );
-    //     })
-    //     .catch(err => {
-    //         console.log(err);
-    //     });
+}
+
+exports.saveAllProducts = (req, res, next) => {
+    console.log('entro al route');
+    saveProducts(req.body.products)
+    .then(result => {
+        console.log('añadidos');
+        res.redirect('/');
+    })
+    .catch(err => console.log(err));
+}
+function saveProducts(products){
+    for(i = 0; i < products.length; i++){
+        req.user.createProduct({
+            title: products[i].title,
+            imageUrl: products[i].imageUrl,
+            description: products[i].description,
+            price: products[i].price,
+            category: products[i].category
+        })
+        .then(result => {
+            console.log('Product added!');
+        })
+        .catch(err =>{
+            console.log(err);
+        });
+    }    
 }

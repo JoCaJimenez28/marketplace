@@ -23,3 +23,9 @@ let inputBox = document.querySelector(".input-box"),
 searchIcon.addEventListener("click", () => inputBox.classList.add("open"));
 
 closeIcon.addEventListener("click", () => inputBox.classList.remove("open"));
+
+var currentYearElement = document.getElementById("currentYear");
+
+var currentYear = new Date().getFullYear();
+
+currentYearElement.textContent = currentYear;

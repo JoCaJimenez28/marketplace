@@ -83,6 +83,18 @@
         <li class="mobile-nav__item">
             <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Products</a>
         </li>
+        <li class="mobile-nav__item"> 
+            <a href="">Category</a>
+             <ul class="ul-submenu">
+                <li class="mobile-nav__submenu"><% category = '2x2'; originPath = path === '/' ? '/shop' : path; %><a href="/search-category/<%= category %><%= originPath %>">2x2</a></li>
+                <li class="mobile-nav__submenu"><% category = '3x3'; originPath = path === '/' ? '/shop' : path; %><a href="/search-category/<%= category %><%= originPath %>">3x3</a></li>
+                <li class="mobile-nav__submenu"><% category = '4x4'; originPath = path === '/' ? '/shop' : path; %><a href="/search-category/<%= category %><%= originPath %>">4x4</a></li>
+                <li class="mobile-nav__submenu"><% category = '5x5'; originPath = path === '/' ? '/shop' : path; %><a href="/search-category/<%= category %><%= originPath %>">5x5</a></li>
+                <li class="mobile-nav__submenu"><% category = '6x6'; originPath = path === '/' ? '/shop' : path; %><a href="/search-category/<%= category %><%= originPath %>">6x6</a></li>
+                <li class="mobile-nav__submenu"><% category = 'especial'; originPath = path === '/' ? '/shop' : path; %><a href="/search-category/<%= category %><%= originPath %>">Formas Especiales</a></li>
+                <input type="hidden" name="originPath" value="<%= path %>">
+            </ul>
+        </li> 
         <% if (isAuthenticated) { %>
             <li class="mobile-nav__item">
              <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
@@ -100,14 +112,16 @@
     </ul>
     <ul class="mobile-nav__item-list">
         <% if (!isAuthenticated) { %>
-            <li class="main-header__item">
+            <li class="mobile-nav__item">
+                <hr>
                 <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
             </li>
-            <li class="main-header__item">
+            <li class="mobile-nav__item">
                 <a class="<%= path === '/register' ? 'active' : '' %>" href="/register">Register</a>
             </li>
             <% } else { %>
-            <li class="main-header__item">
+            <li class="mobile-nav__item">
+                <hr>
                 <form action="/logout" method="post">
                     <!-- <input type="hidden" name="_csrf" value=""> -->
                     <button type="submit">Logout</button>
@@ -116,49 +130,3 @@
             <% } %>
     </ul>
 </nav>
-
-<!-- <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="#!">Start Bootstrap</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                    
-                    <li class="nav-item">
-                        <a class="<%= path === '/products' ? 'nav-link active' : 'nav-link' %>" href="/products">Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="<%= path === '/cart' ? 'nav-link active' : 'nav-link' %>" href="/cart">Cart</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="<%= path === '/orders' ? 'nav-link active' : 'nav-link' %>" href="/orders">Orders</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="<%= path === '/admin/add-product' ? 'nav-link active' : 'nav-link' %>" href="/admin/add-product">Add Product
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="<%= path === '/admin/products' ? 'nav-link active' : 'nav-link' %>" href="/admin/products">Admin Products
-                        </a>
-                    </li>
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#!">All Products</a></li>
-                            <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                            <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <form class="d-flex">
-                    <button class="btn btn-outline-dark" type="submit">
-                        <i class="bi-cart-fill me-1"></i>
-                        Cart
-                        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </nav>
-</header> -->

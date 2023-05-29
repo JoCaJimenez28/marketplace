@@ -21,6 +21,9 @@ const transporter = nodemailer.createTransport({
 });
 
 exports.getLogin = (req, res, next) => {
+  if(req.session.isLoggedIn){
+    return res.redirect('/');
+  }else{
     let errorMessage = req.flash('error');
     let message = req.flash('message');
     if(message.length > 0){
@@ -38,6 +41,7 @@ exports.getLogin = (req, res, next) => {
         message: message,
         isADmin: req.session.isAdmin
       });
+  }
 }
 
 exports.postLogin = (req, res, next) =>{
@@ -74,7 +78,10 @@ exports.postLogin = (req, res, next) =>{
 }
 
 exports.getRegister = (req, res, next) => {
-  let message = req.flash('error');
+  if(req.session.isLoggedIn){
+    return res.redirect('/');
+  }else {
+    let message = req.flash('error');
   if(message.length > 0){
     message = message[0];
   } else{
@@ -87,6 +94,7 @@ exports.getRegister = (req, res, next) => {
         errorMessage: message,
         isAdmin: false
     });
+  }
 }
 
 exports.postRegister = (req, res, next) => {

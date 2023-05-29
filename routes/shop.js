@@ -26,4 +26,7 @@ router.post('/create-order', isAuth, shopController.postOrder);
 
 router.post('/search', shopController.postSearch);
 
+router.get('/search-category/:category/:originPath', shopController.searchCategory);
+router.get('/search-category/:category/admin/products', shopController.searchAdminCategory);
+
 module.exports = router;

@@ -13,8 +13,7 @@ exports.getProducts = (req, res, next) => {
                 path: '/products',
                 isAuthenticated: req.session.isLoggedIn,
                 isAdmin: req.session.isAdmin
-                }
-            );
+            });
         })
         .catch(err => {
             console.log(err);
@@ -174,21 +173,104 @@ exports.getOrders = (req, res, next) =>{
 
 exports.postSearch = (req, res, next) =>{
     const searchedProduct = req.body.search;
+    const originPath = req.body.originPath;
 
     console.log(searchedProduct);
+    console.log('origin ',originPath);
 
     Product.findAll({where: {description: {
         [Op.like]: `%${searchedProduct}%`
       }}})
         .then(products => {
             console.log(products);
-            res.render('shop/index', {
-                path: '/',
-                pageTitle: 'Shop',
-                prods: products,
+            if(originPath === '/'){
+                res.render('shop/index', {
+                    path: '/',
+                    pageTitle: 'Shop',
+                    prods: products,
+                    isAuthenticated: req.session.isLoggedIn,
+                    isAdmin: req.session.isAdmin
+                });
+            }
+            if(originPath === '/products'){
+                res.render('shop/product-list', { 
+                    prods: products, 
+                    pageTitle: 'All Products', 
+                    path: '/products',
+                    isAuthenticated: req.session.isLoggedIn,
+                    isAdmin: req.session.isAdmin
+                });
+            }
+            if(originPath === '/admin/products'){
+                res.render('admin/products', { 
+                    prods: products, 
+                    pageTitle: 'Admin Products', 
+                    path: '/admin/products',
+                    isAuthenticated: req.session.isLoggedIn,
+                    isAdmin: req.session.isAdmin
+                });
+            }
+            
+        })
+        .catch(err => console.log(err));
+}
+
+exports.searchCategory = (req, res, next) =>{
+    const category = req.params.category;
+    console.log('category ',category);
+    const originPath = req.params.originPath;
+
+    console.log('origin ',originPath);
+
+    Product.findAll({where: {category: category}})
+        .then(products => {
+            console.log(products);
+            if(originPath === 'shop'){
+                res.render('shop/index', {
+                    path: '/',
+                    pageTitle: 'Shop',
+                    prods: products,
+                    isAuthenticated: req.session.isLoggedIn,
+                    isAdmin: req.session.isAdmin
+                });
+            }
+            if(originPath === 'products'){
+                res.render('shop/product-list', { 
+                    prods: products, 
+                    pageTitle: 'All Products', 
+                    path: '/products',
+                    isAuthenticated: req.session.isLoggedIn,
+                    isAdmin: req.session.isAdmin
+                });
+            }
+            if(originPath === 'admin'){
+                res.render('admin/products', { 
+                    prods: products, 
+                    pageTitle: 'Admin Products', 
+                    path: '/admin/products',
+                    isAuthenticated: req.session.isLoggedIn,
+                    isAdmin: req.session.isAdmin
+                });
+            }
+            
+        })
+        .catch(err => console.log(err));
+}
+
+exports.searchAdminCategory = (req, res, next) =>{
+    const category = req.params.category;
+    console.log('category ',category);
+    Product.findAll({where: {category: category}})
+        .then(products => {
+            console.log(products);
+            res.render('admin/products', { 
+                prods: products, 
+                pageTitle: 'Admin Products', 
+                path: '/admin/products',
                 isAuthenticated: req.session.isLoggedIn,
                 isAdmin: req.session.isAdmin
-              });
+            });
+                        
         })
         .catch(err => console.log(err));
 }

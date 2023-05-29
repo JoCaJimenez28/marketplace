@@ -378,6 +378,20 @@ input{
   transform: translateY(-50%) rotate(180deg);
 }
 
+.footer {
+  background-color: #f2f2f2;
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.footer__text {
+  color: #888;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
 @media (min-width: 768px) {
   .main-header__nav {
     display: flex;

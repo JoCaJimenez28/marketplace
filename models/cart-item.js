@@ -9,7 +9,8 @@ const CartItem = sequelize.define('cartItem',{
         allowNull: false,
         primaryKey: true
     },
-    quantity: Sequelize.INTEGER
+    quantity: Sequelize.INTEGER,
+    totalPrice: Sequelize.DOUBLE
 });
 
 module.exports = CartItem;

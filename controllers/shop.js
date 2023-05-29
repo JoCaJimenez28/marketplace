@@ -79,7 +79,9 @@ exports.getCart = (req, res, next) =>{
 
 exports.postCart = (req, res, next) =>{
     const prodId = req.body.productId;
+    const total = req.body.price;
     let fetchedCart;
+    let newTotal = total;
     let newQuantity = 1;
     req.user
         .getCart()
@@ -89,20 +91,23 @@ exports.postCart = (req, res, next) =>{
         })
         .then(products => {
         let product;
-        if (products.length > 0) {
+    if (products.length > 0) {
             product = products[0];
         }
 
         if (product) {
             const prevQuantity = product.cartItem.quantity;
+            const prevTotal = product.cartItem.totalPrice;
             newQuantity = prevQuantity + 1;
+            newTotal = prevTotal + +total;
+
             return product;
         }
         return Product.findByPk(prodId);
         })
         .then(product => {
         return fetchedCart.addProduct(product, {
-            through: { quantity: newQuantity }
+            through: { quantity: newQuantity, totalPrice: newTotal }
         });
         })
         .then(() => {
@@ -130,18 +135,22 @@ exports.postCartDeleteProduct = (req, res, next) =>{
 
 exports.postOrder = (req, res, next) => {
     let fetchedCart;
+    let totalCart=0;
     req.user
         .getCart()
         .then(cart =>{
             fetchedCart = cart;
+            console.log(fetchedCart)
             return cart.getProducts();
         })
         .then(products => {
+            console.log(products)
             return req.user
                 .createOrder()
                 .then(order => {
                     return order.addProducts(products.map(product =>{
-                        product.orderItem = { quantity: product.cartItem.quantity }
+                        let totalOrder = totalCart + product.cartItem.totalPrice;
+                        product.orderItem = { quantity: product.cartItem.quantity, totalPrice: totalOrder}
                         return product;
                     }));
                 })
@@ -183,15 +192,6 @@ exports.postSearch = (req, res, next) =>{
       }}})
         .then(products => {
             console.log(products);
-            if(originPath === '/'){
-                res.render('shop/index', {
-                    path: '/',
-                    pageTitle: 'Shop',
-                    prods: products,
-                    isAuthenticated: req.session.isLoggedIn,
-                    isAdmin: req.session.isAdmin
-                });
-            }
             if(originPath === '/products'){
                 res.render('shop/product-list', { 
                     prods: products, 
@@ -206,6 +206,14 @@ exports.postSearch = (req, res, next) =>{
                     prods: products, 
                     pageTitle: 'Admin Products', 
                     path: '/admin/products',
+                    isAuthenticated: req.session.isLoggedIn,
+                    isAdmin: req.session.isAdmin
+                });
+            }else{
+                res.render('shop/index', {
+                    path: '/',
+                    pageTitle: 'Shop',
+                    prods: products,
                     isAuthenticated: req.session.isLoggedIn,
                     isAdmin: req.session.isAdmin
                 });
@@ -234,7 +242,7 @@ exports.searchCategory = (req, res, next) =>{
                     isAdmin: req.session.isAdmin
                 });
             }
-            if(originPath === 'products'){
+            else if(originPath === 'products'){
                 res.render('shop/product-list', { 
                     prods: products, 
                     pageTitle: 'All Products', 
@@ -243,14 +251,8 @@ exports.searchCategory = (req, res, next) =>{
                     isAdmin: req.session.isAdmin
                 });
             }
-            if(originPath === 'admin'){
-                res.render('admin/products', { 
-                    prods: products, 
-                    pageTitle: 'Admin Products', 
-                    path: '/admin/products',
-                    isAuthenticated: req.session.isLoggedIn,
-                    isAdmin: req.session.isAdmin
-                });
+            else{
+                res.redirect('/');
             }
             
         })

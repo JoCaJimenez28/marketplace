@@ -11,8 +11,9 @@
                         <li class="cart__item">
                             <h1><%= p.title %></h1>
                             <h2>Quantity: <%= p.cartItem.quantity %></h2> 
+                            <h2>Total: $<%= p.cartItem.totalPrice %></h2> 
                             <form action="/cart-delete-item" method="post">
-                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <!-- <input type="hidden" name="_csrf" value=""> -->
                                 <input type="hidden" value="<%= p.id %>" name="productId">
                                 <button class="btn danger" type="submit">Delete</button>
                             </form>
